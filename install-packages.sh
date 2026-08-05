@@ -5,6 +5,10 @@ set -euo pipefail
 REPO_PKGS=(ghostty flatpak fish visual-studio-code-bin)
 AUR_PKGS=(brave-origin-bin voxtype-bin)
 
+# Sync package databases first
+echo "==> Syncing package databases"
+sudo pacman -Syu
+
 # Install Arch's official repo packages
 echo "==> Installing repo packages: ${REPO_PKGS[*]}"
 omarchy pkg add "${REPO_PKGS[@]}"
