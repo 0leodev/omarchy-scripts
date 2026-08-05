@@ -2,29 +2,33 @@
 
 HOME_DIR=$HOME
 
-REPO_URL="https://github.com/0leodev/dotfiles"
-REPO_NAME="dotfiles"
+DOTFILES_REPO_URL="https://github.com/0leodev/dotfiles"
+DOTFILES_REPO_NAME="dotfiles"
 
-THEME_DIR="$REPO_NAME/omarchy/.config/omarchy/themes"
+THEME_DIR="$HOME_DIR/$DOTFILES_REPO_NAME/omarchy/.config/omarchy/themes"
 THEME_REPO_URL="https://github.com/0leodev/omarchy-0xleovision-theme.git"
-THEME_REPO_NAME="omarchy-0xleovision-theme"
+THEME_NAME="0xleovision"
 
 echo "==> Installing stow"
 sudo pacman -S --needed --noconfirm stow
 
 # Check if the repository already exists
-if [ -d "$REPO_NAME" ]; then
-  echo "Repository '$REPO_NAME' already exists. Skipping clone"
+if [ -d "$HOME_DIR/$DOTFILES_REPO_NAME" ]; then
+  echo "Repository '$DOTFILES_REPO_NAME' already exists. Skipping clone"
+  CLONE_OK=true
 else
-  git clone "$REPO_URL"
+  if git clone "$DOTFILES_REPO_URL" "$HOME_DIR/$DOTFILES_REPO_NAME"; then
+    CLONE_OK=true
+  else
+    CLONE_OK=false
+  fi  
 fi
 
 # Check if the clone was successful
-if [ $? -eq 0 ]; then
+if [ "$CLONE_OK" = true ]; then
   echo "removing old configs"
   rm -rf ~/.config/fastfetch ~/.config/fish ~/.config/hypr ~/.config/nvim ~/.config/omarchy ~/.config/opencode ~/.config/uwsm ~/.config/waybar
-
-cd "$REPO_NAME"
+cd "$HOME_DIR/$DOTFILES_REPO_NAME"
   stow fastfetch 
   stow fish
   stow hypr
@@ -38,10 +42,14 @@ else
   exit 1
 fi 
 
+# Add my personal theme
 echo "==> Cloning theme into omarchy themes folder"
 cd "$HOME_DIR"
-if [ -d "$THEME_DIR/$THEME_REPO_NAME" ]; then
-  echo "Theme already exists. Skipping clone"
+if [ -d "$THEME_DIR/$THEME_NAME" ]; then
+  echo "Theme $THEME_NAME already exists. Skipping clone"
 else
-  git clone "$THEME_REPO_URL" "$THEME_DIR/$THEME_REPO_NAME"
+  if ! git clone "$THEME_REPO_URL" "$THEME_DIR/$THEME_NAME"; then
+    echo "Failed to clone theme."
+    exit 1
+  fi
 fi
