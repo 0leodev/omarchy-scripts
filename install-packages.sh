@@ -13,7 +13,7 @@ omarchy pkg add "${REPO_PKGS[@]}"
 echo "==> Installing AUR packages: ${AUR_PKGS[*]}"
 omarchy pkg aur add "${AUR_PKGS[@]}"
 
-# Install FLATPAK
+# Add Flathub remote
 if ! flatpak remotes | grep -q flathub; then
   echo "==> Adding Flathub remote"
   sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
