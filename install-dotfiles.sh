@@ -5,9 +5,11 @@ HOME_DIR=$HOME
 DOTFILES_REPO_URL="https://github.com/0leodev/dotfiles"
 DOTFILES_REPO_NAME="dotfiles"
 
-THEME_DIR="$HOME_DIR/$DOTFILES_REPO_NAME/omarchy/.config/omarchy/themes"
+THEME_DIR="$HOME_DIR/.config/omarchy/themes"
 THEME_REPO_URL="https://github.com/0leodev/omarchy-0xleovision-theme.git"
 THEME_NAME="0xleovision"
+
+BRANDING_DIR="$HOME_DIR/.config/omarchy/branding"
 
 echo "==> Installing stow"
 sudo pacman -S --needed --noconfirm stow
@@ -27,16 +29,20 @@ fi
 # Check if the clone was successful
 if [ "$CLONE_OK" = true ]; then
   echo "removing old configs"
-  rm -rf ~/.config/fastfetch ~/.config/fish ~/.config/hypr ~/.config/nvim ~/.config/omarchy ~/.config/opencode ~/.config/uwsm ~/.config/waybar
+  rm -rf ~/.config/fastfetch ~/.config/fish ~/.config/hypr ~/.config/nvim ~/.config/opencode ~/.config/uwsm ~/.config/waybar $BRANDING_DIR 
 cd "$HOME_DIR/$DOTFILES_REPO_NAME"
   stow fastfetch 
   stow fish
   stow hypr
   stow nvim
-  stow omarchy
   stow opencode
   stow uwsm
-  stow waybar 
+  stow waybar
+
+# Copy the branding folder
+  echo "==> Copying branding folder"
+  mkdir -p ~/.config/omarchy
+  cp -r branding "$BRANDING_DIR"  
 else
   echo "Failed to clone the repository."
   exit 1
@@ -44,7 +50,6 @@ fi
 
 # Add my personal theme
 echo "==> Cloning theme into omarchy themes folder"
-cd "$HOME_DIR"
 if [ -d "$THEME_DIR/$THEME_NAME" ]; then
   echo "Theme $THEME_NAME already exists. Skipping clone"
 else
