@@ -6,3 +6,11 @@ cd "$(dirname "$0")"
 
 ./install-packages.sh
 ./install-dotfiles.sh
+
+# Prompt for reboot, defaulting to Yes, Yep or Yup on Enter
+read -r -p "Reboot now? [Y/n] " prompt
+if [[ -z "$prompt" || "$prompt" =~ ^[Yy] ]]; then
+    sudo reboot
+else
+    echo "Reboot skipped."
+fi
