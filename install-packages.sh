@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Custom packages 
-REPO_PKGS=(flatpak omarchy-zsh omarchy-fish)
+REPO_PKGS=(flatpak omarchy-fish)
 AUR_PKGS=(visual-studio-code-bin brave-origin-beta-bin voxtype-bin)
 
 # Sync package databases first
@@ -35,11 +35,11 @@ fi
 echo "==> Setting up Ghostty"
 omarchy-install-terminal ghostty
 
-# Switching to ZSH
-if [[ "$SHELL" != "/usr/bin/zsh" ]]; then
-  echo "==> Switching default shell to zsh"
-  sudo chsh -s /usr/bin/zsh "$USER"
+# Switching to FISH
+if [[ "$SHELL" != "/usr/bin/fish" ]]; then
+  echo "==> Switching default shell to fish"
+  sudo chsh -s /usr/bin/fish "$USER"
 fi
 
 echo "==> Done. All personal packages installed."
-echo "Log out and back in (or start a new session) for zsh to take effect."
+echo "Log out and back in (or start a new session) for fish to take effect."
