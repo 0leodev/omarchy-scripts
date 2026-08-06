@@ -9,6 +9,7 @@ THEME_DIR="$HOME_DIR/.config/omarchy/themes"
 THEME_REPO_URL="https://github.com/0leodev/omarchy-0xleovision-theme.git"
 THEME_NAME="0xleovision"
 
+CONFIGS=(fastfetch fish hypr nvim opencode uwsm waybar)
 BRANDING_DIR="$HOME_DIR/.config/omarchy/branding"
 
 echo "==> Installing stow"
@@ -27,21 +28,14 @@ else
 fi
 
 # Check if the clone was successful
-if [ "$CLONE_OK" = true ]; then
+if [ "$CLONE_OK" = true ] && cd "$HOME_DIR/$DOTFILES_REPO_NAME"; then
   echo "removing old configs"
-  rm -rf ~/.config/fastfetch ~/.config/fish ~/.config/hypr ~/.config/nvim ~/.config/opencode ~/.config/uwsm ~/.config/waybar $BRANDING_DIR 
-cd "$HOME_DIR/$DOTFILES_REPO_NAME"
-  stow fastfetch 
-  stow fish
-  stow hypr
-  stow nvim
-  stow opencode
-  stow uwsm
-  stow waybar
+  rm -rf "${CONFIGS[@]/#/$HOME/.config/}" "$BRANDING_DIR" 
+  stow "${CONFIGS[@]}"
 
 # Copy the branding folder
   echo "==> Copying branding folder"
-  mkdir -p ~/.config/omarchy
+  mkdir -p "$HOME_DIR/.config/omarchy"
   cp -r branding "$BRANDING_DIR"  
 else
   echo "Failed to clone the repository."
@@ -53,6 +47,7 @@ echo "==> Cloning theme into omarchy themes folder"
 if [ -d "$THEME_DIR/$THEME_NAME" ]; then
   echo "Theme $THEME_NAME already exists. Skipping clone"
 else
+  mkdir -p "$THEME_DIR"
   if ! git clone "$THEME_REPO_URL" "$THEME_DIR/$THEME_NAME"; then
     echo "Failed to clone theme."
     exit 1
