@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # Custom packages 
-REPO_PKGS=(flatpak omarchy-zsh omarchy-fish visual-studio-code-bin brave-origin-beta-bin voxtype-bin)
-# AUR_PKGS=(brave-origin-beta-bin voxtype-bin)
+REPO_PKGS=(flatpak omarchy-zsh omarchy-fish)
+AUR_PKGS=(visual-studio-code-bin brave-origin-beta-bin voxtype-bin)
 
 # Sync package databases first
 echo "==> Syncing package databases"
@@ -14,8 +14,8 @@ echo "==> Installing repo packages: ${REPO_PKGS[*]}"
 omarchy pkg add "${REPO_PKGS[@]}"
 
 # Install AUR packages
-# echo "==> Installing AUR packages: ${AUR_PKGS[*]}"
-# omarchy pkg aur add "${AUR_PKGS[@]}"
+echo "==> Installing AUR packages: ${AUR_PKGS[*]}"
+omarchy pkg aur add "${AUR_PKGS[@]}"
 
 # Add Flathub remote
 if ! flatpak remotes | grep -q flathub; then
