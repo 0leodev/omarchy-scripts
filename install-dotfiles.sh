@@ -34,11 +34,7 @@ if [ "$CLONE_OK" = true ] && cd "$HOME_DIR/$DOTFILES_REPO_NAME"; then
   echo "removing old configs"
   rm -rf "${CONFIGS[@]/#/$HOME/.config/}" "$BRANDING_DIR" 
   stow "${CONFIGS[@]}"
-
-# Copy the branding folder
-  echo "==> Copying branding folder"
-  mkdir -p "$HOME_DIR/.config/omarchy"
-  cp -r branding "$BRANDING_DIR"  
+  stow -t "$HOME_DIR/.config/omarchy" branding
 else
   echo "Failed to clone the repository."
   exit 1
