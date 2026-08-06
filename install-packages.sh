@@ -17,6 +17,10 @@ omarchy pkg add "${REPO_PKGS[@]}"
 echo "==> Installing AUR packages: ${AUR_PKGS[*]}"
 omarchy pkg aur add "${AUR_PKGS[@]}"
 
+# Voxtype: download model + start daemon, so the DEL keybinding works
+voxtype setup --download --model base.en
+systemctl --user enable --now voxtype.service
+
 # Add Flathub remote
 if ! flatpak remotes | grep -q flathub; then
   echo "==> Adding Flathub remote"
