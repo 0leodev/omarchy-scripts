@@ -9,7 +9,7 @@ THEME_DIR="$HOME_DIR/.config/omarchy/themes"
 THEME_REPO_URL="https://github.com/0leodev/omarchy-0xleovision-theme.git"
 THEME_NAME="0xleovision"
 
-CONFIGS=(fastfetch fish hypr nvim opencode uwsm waybar)
+CONFIGS=(fastfetch fish hypr nvim opencode uwsm waybar voxtype)
 BRANDING_DIR="$HOME_DIR/.config/omarchy/branding"
 
 echo "==> Installing stow"
