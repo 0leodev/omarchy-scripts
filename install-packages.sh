@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Custom packages 
-REPO_PKGS=(flatpak omarchy-zsh visual-studio-code-bin)
+REPO_PKGS=(flatpak omarchy-zsh omarchy-fish visual-studio-code-bin)
 AUR_PKGS=(brave-origin-beta-bin voxtype-bin)
 
 # Sync package databases first
