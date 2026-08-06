@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Custom packages 
-REPO_PKGS=(ghostty flatpak fish visual-studio-code-bin)
+REPO_PKGS=(flatpak fish visual-studio-code-bin)
 AUR_PKGS=(brave-origin-bin voxtype-bin)
 
 # Sync package databases first
@@ -22,6 +22,10 @@ if ! flatpak remotes | grep -q flathub; then
   echo "==> Adding Flathub remote"
   sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 fi
+
+# Install and set Ghostty as default terminal
+echo "==> Setting up Ghostty"
+omarchy-install-terminal ghostty
 
 # Switching to FISH
 if [[ "$SHELL" != "/usr/bin/fish" ]]; then
