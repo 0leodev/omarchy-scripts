@@ -17,6 +17,12 @@ omarchy pkg add "${REPO_PKGS[@]}"
 echo "==> Installing AUR packages: ${AUR_PKGS[*]}"
 omarchy pkg aur add "${AUR_PKGS[@]}"
 
+# Add Flathub remote
+if ! flatpak remotes | grep -q flathub; then
+  echo "==> Adding Flathub remote"
+  sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+fi
+
 # Voxtype: download model + start daemon, so the DEL keybinding works
 echo "==> Setting up voxtype"
 if [[ -n "$(command -v voxtype)" ]]; then
@@ -25,20 +31,19 @@ if [[ -n "$(command -v voxtype)" ]]; then
   systemctl --user enable --now voxtype.service
 fi
 
-# Add Flathub remote
-if ! flatpak remotes | grep -q flathub; then
-  echo "==> Adding Flathub remote"
-  sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-fi
-
-# Install and set Ghostty as default terminal
-echo "==> Setting up Ghostty"
+echo "==> Install & set Ghostty as default"
 omarchy-install-terminal ghostty
 
-# Switching to FISH
+echo "==> Set Fish as default"
 if [[ "$SHELL" != "/usr/bin/fish" ]]; then
   echo "==> Switching default shell to fish"
   sudo chsh -s /usr/bin/fish "$USER"
+fi
+
+echo "==> Set Brave Origin as default"
+if command -v brave-origin-beta; then
+  xdg-settings set default-web-browser brave-origin-beta.desktop
+  xdg-mime default brave-origin-beta.desktop text/html
 fi
 
 echo "==> Done. All personal packages installed."
