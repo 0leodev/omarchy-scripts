@@ -11,7 +11,7 @@ THEME_NAME="0xleovision"
 
 # remove fish temp 
 # CONFIGS=(fastfetch fish hypr nvim opencode uwsm waybar voxtype)
-CONFIGS=(fastfetch hypr nvim opencode uwsm waybar voxtype)
+CONFIGS=(fastfetch fish hypr nvim opencode uwsm waybar voxtype)
 
 echo "==> Installing stow"
 sudo pacman -S --needed --noconfirm stow
