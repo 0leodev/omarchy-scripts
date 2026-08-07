@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Custom packages 
-REPO_PKGS=(flatpak omarchy-fish)
+REPO_PKGS=(flatpak fish)
 AUR_PKGS=(visual-studio-code-bin brave-origin-beta-bin voxtype-bin)
 
 # Sync package databases first
@@ -42,4 +42,4 @@ if [[ "$SHELL" != "/usr/bin/fish" ]]; then
 fi
 
 echo "==> Done. All personal packages installed."
-echo "Log out and back in (or start a new session) for fish to take effect."
+echo "Log out and back in (or start a new session)."
