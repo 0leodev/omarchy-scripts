@@ -19,41 +19,34 @@ sudo pacman -S --needed --noconfirm stow
 # Check if the repository already exists
 if [ -d "$HOME_DIR/$DOTFILES_REPO_NAME" ]; then
   echo "Repository '$DOTFILES_REPO_NAME' already exists. Skipping clone"
-  CLONE_OK=true
 else
-  if git clone "$DOTFILES_REPO_URL" "$HOME_DIR/$DOTFILES_REPO_NAME"; then
-    CLONE_OK=true
-  else
-    CLONE_OK=false
+  if ! git clone "$DOTFILES_REPO_URL" "$HOME_DIR/$DOTFILES_REPO_NAME"; then
+    echo "Failed to clone the repository."
+    exit 1
   fi  
 fi
 
-# Check if the clone was successful
-if [ "$CLONE_OK" = true ] && cd "$HOME_DIR/$DOTFILES_REPO_NAME"; then
+# Remove old configs and stow new ones
+if cd "$HOME_DIR/$DOTFILES_REPO_NAME"; then
   echo "removing old configs"
   rm -rf "${CONFIGS[@]/#/$HOME/.config/}" "$HOME_DIR/.config/omarchy/branding"
   stow "${CONFIGS[@]}"
   stow omarchy
-else
-  echo "Failed to clone the repository."
-  exit 1
 fi 
 
 # Add my personal theme
 echo "==> Cloning theme into omarchy themes folder"
 if [ -d "$THEME_DIR/$THEME_NAME" ]; then
   echo "Theme $THEME_NAME already exists. Skipping clone"
+  omarchy theme set "$THEME_NAME" >/dev/null
 else
   mkdir -p "$THEME_DIR"
-  if ! git clone "$THEME_REPO_URL" "$THEME_DIR/$THEME_NAME"; then
+  if git clone "$THEME_REPO_URL" "$THEME_DIR/$THEME_NAME"; then
+    omarchy theme set "$THEME_NAME" >/dev/null
+  else  
     echo "Failed to clone theme."
-    exit 1
   fi
 fi
-
-# Apply my personal theme
-echo "==> Applying theme: $THEME_NAME"
-omarchy theme set "$THEME_NAME" >/dev/null
 
 # Recreate nvim's theme.lua link — stow installs the repo's copy verbatim,
 # and that copy is stale/broken (trailing newlines in the target)
