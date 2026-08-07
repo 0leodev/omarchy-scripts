@@ -9,7 +9,7 @@ THEME_DIR="$HOME_DIR/.config/omarchy/themes"
 THEME_REPO_URL="https://github.com/0leodev/omarchy-0xleovision-theme.git"
 THEME_NAME="0xleovision"
 
-CONFIGS=(fastfetch fish ghostty starship hypr nvim opencode uwsm waybar voxtype)
+CONFIGS=(fastfetch fish ghostty hypr nvim opencode uwsm waybar voxtype)
 
 echo "==> Installing stow"
 sudo pacman -S --needed --noconfirm stow
@@ -27,9 +27,10 @@ fi
 # Remove old configs and stow new ones
 if cd "$HOME_DIR/$DOTFILES_REPO_NAME"; then
   echo "removing old configs"
-  rm -rf "${CONFIGS[@]/#/$HOME/.config/}" "$HOME_DIR/.config/omarchy/branding"
+  rm -rf "${CONFIGS[@]/#/$HOME/.config/}" "$HOME_DIR/.config/omarchy/branding" "$HOME_DIR/.config/starship.toml"
   stow "${CONFIGS[@]}"
   stow omarchy
+  stow starship
 fi 
 
 # Add my personal theme
