@@ -10,8 +10,8 @@ THEME_REPO_URL="https://github.com/0leodev/omarchy-0xleovision-theme.git"
 THEME_NAME="0xleovision"
 
 # remove fish temp 
-# CONFIGS=(fastfetch fish hypr nvim opencode uwsm waybar voxtype)
-CONFIGS=(fastfetch hypr nvim opencode uwsm waybar voxtype)
+# CONFIGS=(fastfetch fish ghostty hypr nvim opencode uwsm waybar voxtype)
+CONFIGS=(fastfetch ghostty hypr nvim opencode uwsm waybar voxtype)
 
 echo "==> Installing stow"
 sudo pacman -S --needed --noconfirm stow
