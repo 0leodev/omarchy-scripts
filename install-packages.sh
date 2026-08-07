@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Custom packages 
-REPO_PKGS=(flatpak fish)
+REPO_PKGS=(flatpak omarchy-fish)
 AUR_PKGS=(visual-studio-code-bin brave-origin-beta-bin voxtype-bin)
 
 # Sync package databases first
