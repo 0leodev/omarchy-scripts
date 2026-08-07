@@ -12,7 +12,6 @@ THEME_NAME="0xleovision"
 # remove fish temp 
 # CONFIGS=(fastfetch fish hypr nvim opencode uwsm waybar voxtype)
 CONFIGS=(fastfetch hypr nvim opencode uwsm waybar voxtype)
-BRANDING_DIR="$HOME_DIR/.config/omarchy/branding"
 
 echo "==> Installing stow"
 sudo pacman -S --needed --noconfirm stow
@@ -32,9 +31,9 @@ fi
 # Check if the clone was successful
 if [ "$CLONE_OK" = true ] && cd "$HOME_DIR/$DOTFILES_REPO_NAME"; then
   echo "removing old configs"
-  rm -rf "${CONFIGS[@]/#/$HOME/.config/}" "$BRANDING_DIR" 
+  rm -rf "${CONFIGS[@]/#/$HOME/.config/}" "$HOME_DIR/.config/omarchy/branding"
   stow "${CONFIGS[@]}"
-  stow -t "$HOME_DIR/.config/omarchy" branding
+  stow omarchy
 else
   echo "Failed to clone the repository."
   exit 1
